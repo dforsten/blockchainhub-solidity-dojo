@@ -89,16 +89,33 @@ $("#contractBtn").click(function() {
 });
 
 $("#submitBtn").click(function() {
-    console.log('submitted!');
-    // TODO: implement
+    console.log('submitted! - Name: ' + $("#projectName").val() + ' // Url: ' + $("#projectURL").val() + ' // Addr: ' + $("#projectAddr").val() + '// Value:' + $("#entryFeeProject").val());
+    
+	crowdfundingContract.submitProject($("#projectName").val(), $("#projectURL").val(), {
+        from: $("#projectAddr").val(),
+        value: web3.toWei($("#entryFeeProject").val()),
+        gas: 4700000, // taken from browser solidity
+    });
+    refreshData();
 });
 
 $("#supportBtn").click(function() {
-    console.log('supported!');
-    // TODO: implement
+    console.log('submitted! - Supported addr: ' + $("#supportAddr").val() + ' // with: ' + $("#supportAmount").val());
+
+	crowdfundingContract.supportProject($("#supportAddr").val(), {
+        from: $("#supportFrom").val(),
+        value: web3.toWei($("#supportAmount").val()),
+        gas: 4700000, // taken from browser solidity
+    });
+    refreshData();
 });
 
 $("#finishBtn").click(function() {
     console.log('finished!');
-    // TODO: implement
+    
+	crowdfundingContract.finish({
+        from: web3.eth.accounts[0],
+        value: 0,
+        gas: 4700000, // taken from browser solidity
+    });
 });
